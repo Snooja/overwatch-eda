@@ -1,7 +1,12 @@
 # Public Modules
+from ast import Bytes
 from dataclasses import dataclass, field
 from typing import List
 import os
+import requests
+from io import BytesIO
+from zipfile import ZipFile
+#import pdb
 
 # Internal Modules
 
@@ -10,8 +15,8 @@ import os
 @dataclass(frozen=True,slots=True)
 class DataGetter():
     """Class for fetching the data from overwatchleague (Blizzard's published free data for Overwatch)"""
-
-    dataFolder: str =os.path.join("..","/data","/raw")
+    this_dir = os.path.dirname(__file__)
+    dataFolder: str =os.path.join(this_dir,"..","data","raw")
 
     website: str = 'https://overwatchleague.com/en-us/statslab'
 
@@ -22,3 +27,11 @@ class DataGetter():
        'stats_2021' : 'https://assets.blz-contentstack.com/v3/assets/blt321317473c90505c/blt27d1892d31782bff/6154e94b19501a1ef19120a0/phs_2021-1.zip',
        'maps_stats' : 'https://assets.blz-contentstack.com/v3/assets/blt321317473c90505c/blt4c7ee43fcc7a63c2/61537dcd1bb8c23cf8bbde70/match_map_stats.zip'
        })
+
+    def run(self):
+        for key,value in self.downloadLinksList.items():
+            resp = requests.get(value).content
+            zipfile = ZipFile(BytesIO(resp))
+            with ZipFile(BytesIO(resp)) as z:
+                z.extractall(self.dataFolder)
+
