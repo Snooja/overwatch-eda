@@ -22,3 +22,6 @@ def myDataGetter():
 )
 def test_DataGetter_has_attributes(myDataGetter,parameter):
     assert getattr(myDataGetter,parameter) is not None
+
+def test_DataGetter_runs(myDataGetter):
+    myDataGetter.run()
