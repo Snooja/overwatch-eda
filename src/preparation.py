@@ -29,9 +29,13 @@ class DataGetter():
        })
 
     def run(self):
+        self._check_folders_exist()
         for key,value in self.downloadLinksList.items():
             resp = requests.get(value).content
             zipfile = ZipFile(BytesIO(resp))
             with ZipFile(BytesIO(resp)) as z:
                 z.extractall(self.dataFolder)
 
+    def _check_folders_exist(self):
+        if not os.path.exists(self.dataFolder):
+            os.makedirs(self.dataFolder,exists_ok = True)
