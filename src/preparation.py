@@ -37,5 +37,4 @@ class DataGetter():
                 z.extractall(self.dataFolder)
 
     def _check_folders_exist(self):
-        if not os.path.exists(self.dataFolder):
-            os.makedirs(self.dataFolder,exists_ok = True)
+            os.makedirs(self.dataFolder,exist_ok = True)
