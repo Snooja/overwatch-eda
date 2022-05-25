@@ -18,7 +18,7 @@ import requests
 class DataGetter:
     """Class for fetching the data from overwatchleague (Blizzard's published free data for Overwatch)"""
 
-    dataFolder: Path = Path(__file__).parent / ".." / "data" / "raw"
+    dataFolder: Path = Path(__file__).parent.parent / "data" / "raw"
 
     website: str = "https://overwatchleague.com/en-us/statslab"
 
